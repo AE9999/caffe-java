@@ -1,0 +1,184 @@
+diff --git a/caffe/cppbuild.sh b/caffe/cppbuild.sh
+index 5514360..49db4a5 100755
+--- a/caffe/cppbuild.sh
++++ b/caffe/cppbuild.sh
+@@ -18,7 +18,7 @@ case $PLATFORM in
+         export BLAS=open
+         ;;
+     linux-x86_64)
+-        export CPU_ONLY=0
++        export CPU_ONLY=1
+         export CC="$OLDCC -m64"
+         export CXX="$OLDCXX -m64"
+         export FC="$OLDFC -m64"
+diff --git a/caffe/src/main/java/org/bytedeco/javacpp/caffe.java b/caffe/src/main/java/org/bytedeco/javacpp/caffe.java
+index 2178829..227ba96 100644
+--- a/caffe/src/main/java/org/bytedeco/javacpp/caffe.java
++++ b/caffe/src/main/java/org/bytedeco/javacpp/caffe.java
+@@ -24195,7 +24195,7 @@ public static final int CAFFE_TMP_DIR_RETRIES = 100;
+
+ @Namespace("caffe") public static native @Cast("caffe::rng_t*") Pointer caffe_rng();
+
+-// Fisher–Yates algorithm
++// Fisher???Yates algorithm
+   // namespace caffe
+
+ // #endif  // CAFFE_RNG_HPP_
+diff --git a/caffe/src/main/java/org/bytedeco/javacpp/presets/caffe.java b/caffe/src/main/java/org/bytedeco/javacpp/presets/caffe.java
+index 12f2502..5f9096d 100644
+--- a/caffe/src/main/java/org/bytedeco/javacpp/presets/caffe.java
++++ b/caffe/src/main/java/org/bytedeco/javacpp/presets/caffe.java
+@@ -57,7 +57,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
+         "caffe/util/db_lmdb.hpp", "caffe/util/io.hpp", "caffe/util/rng.hpp", "caffe/util/im2col.hpp", "caffe/util/insert_splits.hpp", "caffe/util/mkl_alternate.hpp",
+         "caffe/util/upgrade_proto.hpp", "caffe/util/cudnn.hpp"}, link = "caffe@.1.0.0-rc3", includepath = {"/usr/local/cuda/include/",
+         "/System/Library/Frameworks/vecLib.framework/", "/System/Library/Frameworks/Accelerate.framework/"}, linkpath = "/usr/local/cuda/lib/"),
+-    @Platform(value = {"linux-x86_64", "macosx-x86_64"}, define = {"SHARED_PTR_NAMESPACE boost", "USE_LEVELDB", "USE_LMDB", "USE_OPENCV"}) })
++    @Platform(value = {"linux-x86_64", "macosx-x86_64"}, define = {"CPU_ONLY", "SHARED_PTR_NAMESPACE boost", "USE_LEVELDB", "USE_LMDB", "USE_OPENCV"}) })
+ public class caffe implements InfoMapper {
+     public void map(InfoMap infoMap) {
+         infoMap.put(new Info("LIBPROTOBUF_EXPORT", "LIBPROTOC_EXPORT", "GOOGLE_PROTOBUF_VERIFY_VERSION", "GOOGLE_ATTRIBUTE_ALWAYS_INLINE", "GOOGLE_ATTRIBUTE_DEPRECATED",
+diff --git a/opencv/src/main/java/org/bytedeco/javacpp/opencv_core.java b/opencv/src/main/java/org/bytedeco/javacpp/opencv_core.java
+index 8cd8355..6723352 100644
+--- a/opencv/src/main/java/org/bytedeco/javacpp/opencv_core.java
++++ b/opencv/src/main/java/org/bytedeco/javacpp/opencv_core.java
+@@ -3128,13 +3128,13 @@ be called outside of parallel region.
+ <p>
+ OpenCV will try to run it's functions with specified threads number, but some behaviour differs from
+ framework:
+--   {@code TBB} – User-defined parallel constructions will run with the same threads number, if
++-   {@code TBB} ??? User-defined parallel constructions will run with the same threads number, if
+     another does not specified. If late on user creates own scheduler, OpenCV will be use it.
+--   {@code OpenMP} – No special defined behaviour.
+--   {@code Concurrency} – If threads == 1, OpenCV will disable threading optimizations and run it's
++-   {@code OpenMP} ??? No special defined behaviour.
++-   {@code Concurrency} ??? If threads == 1, OpenCV will disable threading optimizations and run it's
+     functions sequentially.
+--   {@code GCD} – Supports only values \<= 0.
+--   {@code C=} – No special defined behaviour.
++-   {@code GCD} ??? Supports only values \<= 0.
++-   {@code C=} ??? No special defined behaviour.
+ @param nthreads Number of threads used by OpenCV.
+ \sa getNumThreads, getThreadNum
+  */
+@@ -3145,13 +3145,13 @@ framework:
+ Always returns 1 if OpenCV is built without threading support.
+ <p>
+ The exact meaning of return value depends on the threading framework used by OpenCV library:
+-- {@code TBB} – The number of threads, that OpenCV will try to use for parallel regions. If there is
++- {@code TBB} ??? The number of threads, that OpenCV will try to use for parallel regions. If there is
+   any tbb::thread_scheduler_init in user code conflicting with OpenCV, then function returns
+   default number of threads used by TBB library.
+-- {@code OpenMP} – An upper bound on the number of threads that could be used to form a new team.
+-- {@code Concurrency} – The number of threads, that OpenCV will try to use for parallel regions.
+-- {@code GCD} – Unsupported; returns the GCD thread pool limit (512) for compatibility.
+-- {@code C=} – The number of threads, that OpenCV will try to use for parallel regions, if before
++- {@code OpenMP} ??? An upper bound on the number of threads that could be used to form a new team.
++- {@code Concurrency} ??? The number of threads, that OpenCV will try to use for parallel regions.
++- {@code GCD} ??? Unsupported; returns the GCD thread pool limit (512) for compatibility.
++- {@code C=} ??? The number of threads, that OpenCV will try to use for parallel regions, if before
+   called setNumThreads with threads \> 0, otherwise returns the number of logical CPUs,
+   available for the process.
+ \sa setNumThreads, getThreadNum
+@@ -3162,12 +3162,12 @@ The exact meaning of return value depends on the threading framework used by Ope
+ returns 0 if called outside of parallel region.
+ <p>
+ The exact meaning of return value depends on the threading framework used by OpenCV library:
+-- {@code TBB} – Unsupported with current 4.1 TBB release. May be will be supported in future.
+-- {@code OpenMP} – The thread number, within the current team, of the calling thread.
+-- {@code Concurrency} – An ID for the virtual processor that the current context is executing on (0
++- {@code TBB} ??? Unsupported with current 4.1 TBB release. May be will be supported in future.
++- {@code OpenMP} ??? The thread number, within the current team, of the calling thread.
++- {@code Concurrency} ??? An ID for the virtual processor that the current context is executing on (0
+   for master thread and unique number for others, but not necessary 1,2,3,...).
+-- {@code GCD} – System calling thread's ID. Never returns 0 inside parallel region.
+-- {@code C=} – The index of the current parallel task.
++- {@code GCD} ??? System calling thread's ID. Never returns 0 inside parallel region.
++- {@code C=} ??? The index of the current parallel task.
+ \sa setNumThreads, getNumThreads
+  */
+ @Namespace("cv") public static native int getThreadNum();
+@@ -16226,11 +16226,11 @@ Elements can be accessed using the following methods:
+     /**
+         @param [out] m - output matrix; if it does not have a proper size or type before the operation,
+             it is reallocated
+-        @param [in] rtype – desired output matrix type or, rather, the depth since the number of channels
++        @param [in] rtype ??? desired output matrix type or, rather, the depth since the number of channels
+             are the same as the input has; if rtype is negative, the output matrix will have the
+             same type as the input.
+-        @param [in] alpha – optional scale factor
+-        @param [in] beta – optional delta added to the scaled values
++        @param [in] alpha ??? optional scale factor
++        @param [in] beta ??? optional delta added to the scaled values
+     */
+     public native void convertTo( @ByRef Mat m, int rtype, double alpha/*=1*/, double beta/*=0*/ );
+     public native void convertTo( @ByRef Mat m, int rtype );
+@@ -17515,7 +17515,7 @@ data to/from a file.
+ <p>
+ The node is used to store each and every element of the file storage opened for reading. When
+ XML/YAML file is read, it is first parsed and stored in the memory as a hierarchical collection of
+-nodes. Each node can be a “leaf” that is contain a single number or a string, or be a collection of
++nodes. Each node can be a ???leaf??? that is contain a single number or a string, or be a collection of
+ other nodes. There can be named collections (mappings) where each element has a name and it is
+ accessed by a name, and ordered collections (sequences) where elements do not have names but rather
+ accessed by index. Type of the file node can be determined using FileNode::type method.
+diff --git a/opencv/src/main/java/org/bytedeco/javacpp/opencv_face.java b/opencv/src/main/java/org/bytedeco/javacpp/opencv_face.java
+index 61b157e..a687a40 100644
+--- a/opencv/src/main/java/org/bytedeco/javacpp/opencv_face.java
++++ b/opencv/src/main/java/org/bytedeco/javacpp/opencv_face.java
+@@ -204,7 +204,7 @@ which is available since the 2.4 release. I suggest you take a look at its descr
+ <p>
+ Algorithm provides the following features for all derived classes:
+ <p>
+--   So called “virtual constructor”. That is, each Algorithm derivative is registered at program
++-   So called ???virtual constructor???. That is, each Algorithm derivative is registered at program
+     start and you can get the list of registered algorithms and create instance of a particular
+     algorithm by its name (see Algorithm::create). If you plan to add your own algorithms, it is
+     good practice to add a unique prefix to your algorithms to distinguish them from other
+diff --git a/opencv/src/main/java/org/bytedeco/javacpp/opencv_features2d.java b/opencv/src/main/java/org/bytedeco/javacpp/opencv_features2d.java
+index 7001e3a..01fb6ca 100644
+--- a/opencv/src/main/java/org/bytedeco/javacpp/opencv_features2d.java
++++ b/opencv/src/main/java/org/bytedeco/javacpp/opencv_features2d.java
+@@ -744,7 +744,7 @@ F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on
+ <p>
+ \note AKAZE descriptors can only be used with KAZE or AKAZE keypoints. Try to avoid using *extract*
+ and *detect* instead of *operator()* due to performance reasons. .. [ANB13] Fast Explicit Diffusion
+-for Accelerated Features in Nonlinear Scale Spaces. Pablo F. Alcantarilla, Jesús Nuevo and Adrien
++for Accelerated Features in Nonlinear Scale Spaces. Pablo F. Alcantarilla, Jes??s Nuevo and Adrien
+ Bartoli. In British Machine Vision Conference (BMVC), Bristol, UK, September 2013.
+  */
+ @Namespace("cv") public static class AKAZE extends Feature2D {
+diff --git a/opencv/src/main/java/org/bytedeco/javacpp/opencv_imgproc.java b/opencv/src/main/java/org/bytedeco/javacpp/opencv_imgproc.java
+index 6129242..55e8414 100644
+--- a/opencv/src/main/java/org/bytedeco/javacpp/opencv_imgproc.java
++++ b/opencv/src/main/java/org/bytedeco/javacpp/opencv_imgproc.java
+@@ -3334,7 +3334,7 @@ public static final int
+     public native int getVotesThreshold();
+ }
+
+-/** Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
++/** Guil, N., Gonz??lez-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
+  *  Detects position, traslation and rotation */
+ @Namespace("cv") public static class GeneralizedHoughGuil extends GeneralizedHough {
+     static { Loader.load(); }
+@@ -6549,7 +6549,7 @@ at most 8 vertices. Stored as std::vector\<cv::Point2f\> or cv::Mat as Mx1 of ty
+  *  Detects position only without traslation and rotation */
+ @Namespace("cv") public static native @Ptr GeneralizedHoughBallard createGeneralizedHoughBallard();
+
+-/** Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
++/** Guil, N., Gonz??lez-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
+  *  Detects position, traslation and rotation */
+ @Namespace("cv") public static native @Ptr GeneralizedHoughGuil createGeneralizedHoughGuil();
+
+diff --git a/opencv/src/main/java/org/bytedeco/javacpp/opencv_ximgproc.java b/opencv/src/main/java/org/bytedeco/javacpp/opencv_ximgproc.java
+index 0e3552c..aa3e307 100644
+--- a/opencv/src/main/java/org/bytedeco/javacpp/opencv_ximgproc.java
++++ b/opencv/src/main/java/org/bytedeco/javacpp/opencv_ximgproc.java
+@@ -1630,7 +1630,7 @@ and the number of elements in the estimated covariance matrix.
+  November 2012.
+
+  "SLIC Superpixels" Radhakrishna Achanta, Appu Shaji, Kevin Smith,
+- Aurelien Lucchi, Pascal Fua, and Sabine Süsstrunk, EPFL Technical
++ Aurelien Lucchi, Pascal Fua, and Sabine S??sstrunk, EPFL Technical
+  Report no. 149300, June 2010.
+
+  OpenCV port by: Cristian Balint <cristian dot balint at gmail dot com>
