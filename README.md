@@ -1,5 +1,5 @@
 # Description
-This is an image classification tool which recognizes models in images. (Yes, it is that cheesy.)
+This is an image classification tool which recognizes models in images. [Yes, it is that cheesy.]([http://aetinkering.blogspot.com/2016/05/the-ai-software-i-remember-from-back-at.html)
 
 # Building
 Building with docker (results in 7gb image):
