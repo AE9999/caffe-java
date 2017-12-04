@@ -30,7 +30,8 @@ RUN  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true
       git clone https://github.com/bytedeco/javacv.git
 COPY java_cpp_cafe.patch /
 COPY javacv.patch /
-RUN (cd javacpp-presets && git checkout 1.2 && patch -p1 < /java_cpp_cafe.patch) && \
+COPY java_cpp_ffmpeg.patch /
+RUN (cd javacpp-presets && git checkout 1.2 && patch -p1 < /java_cpp_cafe.patch && patch -p1 < /java_cpp_ffmpeg.patch) && \
     (cd javacv && git checkout 1.2 && patch -p1 < /javacv.patch)
 RUN (cd javacpp && mvn install)
 RUN (cd javacpp-presets && ./cppbuild.sh install opencv \

@@ -1,0 +1,13 @@
+diff --git a/ffmpeg/cppbuild.sh b/ffmpeg/cppbuild.sh
+index 12df97b..193213e 100644
+--- a/ffmpeg/cppbuild.sh
++++ b/ffmpeg/cppbuild.sh
+@@ -39,7 +39,7 @@ else
+     download https://www.openssl.org/source/$OPENSSL.tar.gz $OPENSSL.tar.gz
+     download https://github.com/cisco/openh264/archive/v$OPENH264_VERSION.tar.gz openh264-$OPENH264_VERSION.tar.gz
+     download ftp://ftp.videolan.org/pub/videolan/x264/snapshots/last_stable_x264.tar.bz2 last_stable_x264.tar.bz2
+-    download https://ftp.videolan.org/pub/videolan/x265/$X265.tar.gz $X265.tar.gz
++    download http://ftp.videolan.org/pub/videolan/x265/$X265.tar.gz $X265.tar.gz
+     download https://chromium.googlesource.com/webm/libvpx/+archive/$VPX_VERSION.tar.gz libvpx-$VPX_VERSION.tar.gz
+     download http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 ffmpeg-$FFMPEG_VERSION.tar.bz2
+ 
