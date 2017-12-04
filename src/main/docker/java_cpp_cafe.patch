@@ -1,5 +1,5 @@
 diff --git a/caffe/cppbuild.sh b/caffe/cppbuild.sh
-index 5514360..49db4a5 100755
+index 4b94266..e2d871d 100755
 --- a/caffe/cppbuild.sh
 +++ b/caffe/cppbuild.sh
 @@ -18,7 +18,7 @@ case $PLATFORM in
@@ -11,21 +11,30 @@ index 5514360..49db4a5 100755
          export CC="$OLDCC -m64"
          export CXX="$OLDCXX -m64"
          export FC="$OLDFC -m64"
+@@ -59,7 +59,7 @@ download https://github.com/google/leveldb/archive/v$LEVELDB.tar.gz leveldb-$LEV
+ download https://github.com/google/snappy/releases/download/$SNAPPY/snappy-$SNAPPY.tar.gz snappy-$SNAPPY.tar.gz
+ download https://github.com/LMDB/lmdb/archive/LMDB_$LMDB.tar.gz lmdb-LMDB_$LMDB.tar.gz
+ download http://downloads.sourceforge.net/project/boost/boost/${BOOST//_/.}/boost_$BOOST.tar.gz boost_$BOOST.tar.gz
+-download http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-$HDF5/src/hdf5-$HDF5.tar.bz2 hdf5-$HDF5.tar.bz2
++download https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-$HDF5/src/hdf5-$HDF5.tar.bz2 hdf5-$HDF5.tar.bz2
+ download https://github.com/xianyi/OpenBLAS/archive/v$OPENBLAS.tar.gz OpenBLAS-$OPENBLAS.tar.gz
+ download https://github.com/BVLC/caffe/archive/$CAFFE_VERSION.tar.gz caffe-$CAFFE_VERSION.tar.gz
+ 
 diff --git a/caffe/src/main/java/org/bytedeco/javacpp/caffe.java b/caffe/src/main/java/org/bytedeco/javacpp/caffe.java
-index 2178829..227ba96 100644
+index c2e6438..a626e20 100644
 --- a/caffe/src/main/java/org/bytedeco/javacpp/caffe.java
 +++ b/caffe/src/main/java/org/bytedeco/javacpp/caffe.java
-@@ -24195,7 +24195,7 @@ public static final int CAFFE_TMP_DIR_RETRIES = 100;
-
+@@ -24189,7 +24189,7 @@ public static final int CAFFE_TMP_DIR_RETRIES = 100;
+ 
  @Namespace("caffe") public static native @Cast("caffe::rng_t*") Pointer caffe_rng();
-
+ 
 -// Fisher–Yates algorithm
 +// Fisher???Yates algorithm
    // namespace caffe
-
+ 
  // #endif  // CAFFE_RNG_HPP_
 diff --git a/caffe/src/main/java/org/bytedeco/javacpp/presets/caffe.java b/caffe/src/main/java/org/bytedeco/javacpp/presets/caffe.java
-index 12f2502..5f9096d 100644
+index 421f6ff..ca4e37f 100644
 --- a/caffe/src/main/java/org/bytedeco/javacpp/presets/caffe.java
 +++ b/caffe/src/main/java/org/bytedeco/javacpp/presets/caffe.java
 @@ -57,7 +57,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
@@ -38,7 +47,7 @@ index 12f2502..5f9096d 100644
      public void map(InfoMap infoMap) {
          infoMap.put(new Info("LIBPROTOBUF_EXPORT", "LIBPROTOC_EXPORT", "GOOGLE_PROTOBUF_VERIFY_VERSION", "GOOGLE_ATTRIBUTE_ALWAYS_INLINE", "GOOGLE_ATTRIBUTE_DEPRECATED",
 diff --git a/opencv/src/main/java/org/bytedeco/javacpp/opencv_core.java b/opencv/src/main/java/org/bytedeco/javacpp/opencv_core.java
-index 8cd8355..6723352 100644
+index f489e31..c3ae843 100644
 --- a/opencv/src/main/java/org/bytedeco/javacpp/opencv_core.java
 +++ b/opencv/src/main/java/org/bytedeco/javacpp/opencv_core.java
 @@ -3128,13 +3128,13 @@ be called outside of parallel region.
@@ -97,7 +106,7 @@ index 8cd8355..6723352 100644
  \sa setNumThreads, getNumThreads
   */
  @Namespace("cv") public static native int getThreadNum();
-@@ -16226,11 +16226,11 @@ Elements can be accessed using the following methods:
+@@ -16228,11 +16228,11 @@ Elements can be accessed using the following methods:
      /**
          @param [out] m - output matrix; if it does not have a proper size or type before the operation,
              it is reallocated
@@ -112,7 +121,7 @@ index 8cd8355..6723352 100644
      */
      public native void convertTo( @ByRef Mat m, int rtype, double alpha/*=1*/, double beta/*=0*/ );
      public native void convertTo( @ByRef Mat m, int rtype );
-@@ -17515,7 +17515,7 @@ data to/from a file.
+@@ -17517,7 +17517,7 @@ data to/from a file.
  <p>
  The node is used to store each and every element of the file storage opened for reading. When
  XML/YAML file is read, it is first parsed and stored in the memory as a hierarchical collection of
@@ -122,7 +131,7 @@ index 8cd8355..6723352 100644
  accessed by a name, and ordered collections (sequences) where elements do not have names but rather
  accessed by index. Type of the file node can be determined using FileNode::type method.
 diff --git a/opencv/src/main/java/org/bytedeco/javacpp/opencv_face.java b/opencv/src/main/java/org/bytedeco/javacpp/opencv_face.java
-index 61b157e..a687a40 100644
+index 210cd4e..7720e9a 100644
 --- a/opencv/src/main/java/org/bytedeco/javacpp/opencv_face.java
 +++ b/opencv/src/main/java/org/bytedeco/javacpp/opencv_face.java
 @@ -204,7 +204,7 @@ which is available since the 2.4 release. I suggest you take a look at its descr
@@ -135,7 +144,7 @@ index 61b157e..a687a40 100644
      algorithm by its name (see Algorithm::create). If you plan to add your own algorithms, it is
      good practice to add a unique prefix to your algorithms to distinguish them from other
 diff --git a/opencv/src/main/java/org/bytedeco/javacpp/opencv_features2d.java b/opencv/src/main/java/org/bytedeco/javacpp/opencv_features2d.java
-index 7001e3a..01fb6ca 100644
+index e9886d2..77751f6 100644
 --- a/opencv/src/main/java/org/bytedeco/javacpp/opencv_features2d.java
 +++ b/opencv/src/main/java/org/bytedeco/javacpp/opencv_features2d.java
 @@ -744,7 +744,7 @@ F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on
@@ -148,13 +157,13 @@ index 7001e3a..01fb6ca 100644
   */
  @Namespace("cv") public static class AKAZE extends Feature2D {
 diff --git a/opencv/src/main/java/org/bytedeco/javacpp/opencv_imgproc.java b/opencv/src/main/java/org/bytedeco/javacpp/opencv_imgproc.java
-index 6129242..55e8414 100644
+index 3bea796..764a954 100644
 --- a/opencv/src/main/java/org/bytedeco/javacpp/opencv_imgproc.java
 +++ b/opencv/src/main/java/org/bytedeco/javacpp/opencv_imgproc.java
 @@ -3334,7 +3334,7 @@ public static final int
      public native int getVotesThreshold();
  }
-
+ 
 -/** Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
 +/** Guil, N., Gonz??lez-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
   *  Detects position, traslation and rotation */
@@ -163,22 +172,22 @@ index 6129242..55e8414 100644
 @@ -6549,7 +6549,7 @@ at most 8 vertices. Stored as std::vector\<cv::Point2f\> or cv::Mat as Mx1 of ty
   *  Detects position only without traslation and rotation */
  @Namespace("cv") public static native @Ptr GeneralizedHoughBallard createGeneralizedHoughBallard();
-
+ 
 -/** Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
 +/** Guil, N., Gonz??lez-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
   *  Detects position, traslation and rotation */
  @Namespace("cv") public static native @Ptr GeneralizedHoughGuil createGeneralizedHoughGuil();
-
+ 
 diff --git a/opencv/src/main/java/org/bytedeco/javacpp/opencv_ximgproc.java b/opencv/src/main/java/org/bytedeco/javacpp/opencv_ximgproc.java
-index 0e3552c..aa3e307 100644
+index f0851f8..aa5e490 100644
 --- a/opencv/src/main/java/org/bytedeco/javacpp/opencv_ximgproc.java
 +++ b/opencv/src/main/java/org/bytedeco/javacpp/opencv_ximgproc.java
 @@ -1630,7 +1630,7 @@ and the number of elements in the estimated covariance matrix.
   November 2012.
-
+ 
   "SLIC Superpixels" Radhakrishna Achanta, Appu Shaji, Kevin Smith,
 - Aurelien Lucchi, Pascal Fua, and Sabine Süsstrunk, EPFL Technical
 + Aurelien Lucchi, Pascal Fua, and Sabine S??sstrunk, EPFL Technical
   Report no. 149300, June 2010.
-
+ 
   OpenCV port by: Cristian Balint <cristian dot balint at gmail dot com>

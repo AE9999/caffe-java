@@ -22,22 +22,22 @@
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
       <artifactId>caffe</artifactId>
-      <version>rc3-1.2-SNAPSHOT</version>
+      <version>rc3-1.2</version>
     </dependency>
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
       <artifactId>ffmpeg</artifactId>
-      <version>3.0-1.2-SNAPSHOT</version>
+      <version>3.0.2-1.2</version>
     </dependency>
     <dependency>
       <groupId>org.bytedeco</groupId>
       <artifactId>javacv</artifactId>
-      <version>1.2-SNAPSHOT</version>
+      <version>1.2</version>
     </dependency>
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
       <artifactId>opencv</artifactId>
-      <version>3.1.0-1.2-SNAPSHOT</version>
+      <version>3.1.0-1.2</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
